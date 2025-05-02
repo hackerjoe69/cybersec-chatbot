@@ -183,7 +183,7 @@ class CyberSecurityChatbot:
 
 if __name__ == "__main__":
     # Replace with your actual Groq API key
-    API_KEY = "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"
+    API_KEY = "gsk-your-groq-api-key-here"
     
     if API_KEY.startswith("gsk-your"):
         print(f"{Fore.RED}ERROR: Please replace 'gsk-your-groq-api-key-here' with your actual Groq API key{Style.RESET_ALL}")
