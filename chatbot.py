@@ -1,4 +1,4 @@
-import openai
+import groq
 import re
 import random
 from time import sleep
@@ -9,7 +9,7 @@ init(autoreset=True)
 
 class CyberSecurityChatbot:
     def __init__(self, api_key):
-        openai.api_key = api_key
+        self.client = groq.Client(api_key=api_key)
         self.conversation_history = []
         self.topics = {
             "password": {
@@ -82,14 +82,14 @@ class CyberSecurityChatbot:
         self.conversation_history.append({"role": "user", "content": prompt})
         
         try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+            response = self.client.chat.completions.create(
+                model="mixtral-8x7b-32768",  # Groq's fastest model
                 messages=self.conversation_history,
                 temperature=0.7,
                 max_tokens=500
             )
             
-            ai_reply = response.choices[0].message['content']
+            ai_reply = response.choices[0].message.content
             self.conversation_history.append({"role": "assistant", "content": ai_reply})
             return ai_reply
         
@@ -182,11 +182,11 @@ class CyberSecurityChatbot:
                 break
 
 if __name__ == "__main__":
-    # Replace with your actual OpenAI API key
-    API_KEY = "sk-your-openai-api-key-here"
+    # Replace with your actual Groq API key
+    API_KEY = "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"
     
-    if API_KEY.startswith("sk-your"):
-        print(f"{Fore.RED}ERROR: Please replace 'sk-your-openai-api-key-here' with your actual OpenAI API key{Style.RESET_ALL}")
+    if API_KEY.startswith("gsk-your"):
+        print(f"{Fore.RED}ERROR: Please replace 'gsk-your-groq-api-key-here' with your actual Groq API key{Style.RESET_ALL}")
     else:
         chatbot = CyberSecurityChatbot(API_KEY)
         chatbot.run()
